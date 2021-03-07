@@ -20,6 +20,16 @@ def test_CanCalculateTotalImpurePrice(invoice, products):
     assert invoice.totalImpurePrice(products) == 75
 
 
+def test_CanCalculateTotalDiscount(invoice, products):
+    invoice.totalDiscount(products)
+    assert invoice.totalDiscount(products) == 5.62
+
+
+def test_CanCalculateTotalPurePrice(invoice, products):
+    invoice.totalPurePrice(products)
+    assert invoice.totalPurePrice(products) == 69.38
+
+
 def test_addProduct(invoice, products):
     invoice.item = invoice.addProduct(products['Pen']['qnt'],
                                       products['Pen']['unit_price'],
@@ -29,11 +39,8 @@ def test_addProduct(invoice, products):
     assert invoice.item['discount'] == products['Pen']['discount']
 
 
-def test_CanCalculateTotalDiscount(invoice, products):
-    invoice.totalDiscount(products)
-    assert invoice.totalDiscount(products) == 5.62
+def test_changeProductQnt(invoice, products):
+    test_addProduct(invoice, products)
+    invoice.changeProductQnt('15')
 
-
-def test_CanCalculateTotalPurePrice(invoice, products):
-    invoice.totalPurePrice(products)
-    assert invoice.totalPurePrice(products) == 69.38
+    assert invoice.item['qnt'] == '15'
